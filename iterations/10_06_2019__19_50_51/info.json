@@ -4,6 +4,5 @@
   "precision": 52.2,
   "recall": 0.7,
   "mAP": 8.4,
-  "image_count": 1000,
   "dataset_size": 60000
 }
