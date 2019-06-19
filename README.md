@@ -78,3 +78,9 @@ MIT License. Copyright (c) 2019 IMAGO Research Group.
 
 ## Authors
 [Claudemir Casa](claudemir.casa)
+
+## Collaborators
+Special thanks to my lab colleagues.
+
+[Jhonatan Souza](https://github.com/xkiddie)
+[Tiago Mota de Oliveira](https://github.com/tiufsc)
