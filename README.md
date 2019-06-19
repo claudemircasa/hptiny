@@ -35,6 +35,10 @@ python python/predict.py <image_file>
 [![Visualizer badge](https://img.shields.io/badge/visualizer-visualdl-blue.svg)](http://visualdl.paddlepaddle.org/)
 
 ## Estatistics
+[![Legend badge](https://img.shields.io/badge/-precision-blue.svg)]()
+[![Legend badge](https://img.shields.io/badge/-recall-orange.svg)]()
+[![Legend badge](https://img.shields.io/badge/-mAP-green.svg)]()
+
 <p align="center">
 <img src="/statistics/precision.png" width="30%"/>
 <img src="/statistics/recall.png" width="30%"/>
