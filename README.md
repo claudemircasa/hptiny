@@ -4,7 +4,7 @@
 [![Type badge](https://img.shields.io/badge/type-compact-blueviolet.svg)]()
 
 <p align="center">
-	<img src="banner.png" width="100%"/>
+  <img src="banner.png" width="100%"/>
 </p>
 
 ## What is PARTNet
@@ -35,6 +35,12 @@ python python/predict.py <image_file>
 [![Visualizer badge](https://img.shields.io/badge/visualizer-visualdl-blue.svg)](http://visualdl.paddlepaddle.org/)
 
 ## Estatistics
+<p align="center">
+<img src="/statistics/precision.png" width="30%"/>
+<img src="/statistics/recall.png" width="30%"/>
+<img src="/statistics/mAP.png" width="30%"/>
+</p>
+
 These are the statistics of the last iteration performed. They are based on a subsample of the original image database that contains 60,000 images.
 
 ### Performance Per Tag
