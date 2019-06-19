@@ -51,6 +51,10 @@ These are the statistics of the last iteration performed. They are based on a su
 
 ### Performance Per Tag
 
+| Probability Threshold | Overlap Threshold |
+| --- | --------- |
+| 50% | 30% |
+
 | Tag | Precision | Recall | A.P. | Image Count |
 | --- | --------- | ------ | ---- | ----------- |
 | Human beard | 78.6% | 10.8% | 34.9% | 5044 |
