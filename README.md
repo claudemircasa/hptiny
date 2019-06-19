@@ -34,7 +34,7 @@ python python/predict.py <image_file>
 [![Visualizer badge](https://img.shields.io/badge/visualizer-netron-blue.svg)](https://lutzroeder.github.io/Netron)
 [![Visualizer badge](https://img.shields.io/badge/visualizer-visualdl-blue.svg)](http://visualdl.paddlepaddle.org/)
 
-## Estatistics
+## Statistics
 [![Legend badge](https://img.shields.io/badge/-precision-blue.svg)]()
 [![Legend badge](https://img.shields.io/badge/-recall-orange.svg)]()
 [![Legend badge](https://img.shields.io/badge/-mAP-green.svg)]()
