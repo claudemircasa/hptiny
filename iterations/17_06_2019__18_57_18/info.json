@@ -1,0 +1,9 @@
+{
+  "probability_threshold": 50,
+  "overlap threshold": 30,
+  "precision": 53.9,
+  "recall": 0.7,
+  "mAP": 8.8,
+  "image_count": 1015,
+  "dataset_size": 60000
+}
