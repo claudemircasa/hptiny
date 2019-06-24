@@ -75,7 +75,7 @@ We use a subset of images extracted from Google Open Images Dataset V5 ([OIDV5](
 The database is really great, if you have interest contact us by [email](mailto:claudemir.casa@ufpr.br).
 
 ## Contributions
-Do you want to contribute a model? To get started, pick any model presented above with the [contribute]() link under the Description column. The links point to a page containing guidelines for making a contribution.
+Do you want to contribute? To get started, choose the latest version of the template above, retrain, if you get better results with the same image database it will be published here.
 
 ## License
 [![License badge](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
