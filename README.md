@@ -2,6 +2,7 @@
 [![Generic badge](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)]()
 [![Status badge](https://img.shields.io/badge/status-in%20progress-green.svg)]()
 [![Type badge](https://img.shields.io/badge/type-compact-blueviolet.svg)]()
+[![Version badge](https://img.shields.io/badge/v-1.3.0-blue.svg)]()
 
 <p align="center">
   <img src="banner.png" width="100%"/>
