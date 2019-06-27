@@ -57,18 +57,18 @@ These are the statistics of the last iteration performed. They are based on a su
 
 | Tag | Precision | Recall | A.P. | Image Count |
 | --- | --------- | ------ | ---- | ----------- |
-| Human beard | 78.6% | 10.8% | 34.9% | 5044 |
-| Man | 38.3% | 1.8% | 13.3% | 5087 |
-| Human hair | 33.3% | 0.0% | 6.5% | 5105 |
-| Woman | 30.4% | 0.2% | 10.7% | 5059 |
-| Human head | 20.0% | 0.0% | 5.9% | 5123 |
-| Human ear | 11.8% | 0.1% | 4.8% | 5071 |
-| Human eye | 11.1% | 0.0% | 5.5% | 5115 |
-| Human nose | 0.0% | 0.0% | 3.1% | 5121 |
-| Human face | 0.0% | 0.0% | 6.9% | 5090 |
-| Human eyebrow | 0.0% | 0.0% | 5.0% | 5081 |
-| Human forehead | 0.0% | 0.0% | 5.3% | 5094 |
-| Human mouth | 0.0% | 0.0% | 3.8% | 5116 |
+| Human beard |	78.9% |	13.0% |	36.4%	| 5058 |
+| Man	| 43.3%	| 1.2%	| 13.7%	| 5155 |
+| Woman	| 40.0%	| 0.6%	| 10.7%	| 5116 |
+| Human ear |	38.5% |	0.4%	| 5.2%	| 5138 |
+| Human eye |	28.6%	| 0.1%	| 4.7%	| 5202 |
+| Human face |	10.0%	| 0.0%	| 7.1%	| 5185 |
+| Human mouth |	0.0%	| 0.0%	| 2.9%	| 5207 |
+| Human forehead |	0.0% | 0.0%	| 4.8%	| 5103 |
+| Human hair |	0.0%	| 0.0%	| 5.5%	| 5187 |
+| Human nose |	0.0%	| 0.0%	| 2.3%	| 5211 |
+| Human eyebrow |	0.0%	| 0.0%	| 4.4%	| 5142 |
+| Human head | 0.0%	| 0.0%	| 6.1%	| 5220 |
 
 ## Dataset
 We use a subset of images extracted from Google Open Images Dataset V5 ([OIDV5](https://storage.googleapis.com/openimages/web/factsfigures.html)) containing 60,000 images that were randomly extracted using the [OIDv4_ToolKit tool](https://github.com/EscVM/OIDv4_ToolKit). 
