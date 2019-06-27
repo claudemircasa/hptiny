@@ -8,7 +8,7 @@
   <img src="banner.png" width="100%"/>
 </p>
 
-<img src="/icons/woman.png" width="7%"/> <img src="/icons/man.png" width="7%"/> <img src="/icons/head.png" width="7%"/> <img src="/icons/face.png" width="7%"/> <img src="/icons/hair.png" width="7%"/> <img src="/icons/beard.png" width="7%"/> <img src="/icons/forehead.png" width="7%"/> <img src="/icons/mouth.png" width="7%"/> <img src="/icons/nose.png" width="7%"/> <img src="/icons/eyes.png" width="7%"/> <img src="/icons/eyebrow.png" width="7%"/> <img src="/icons/ear.png" width="7%"/>
+<img src="/icons/woman.png" width="7.8%"/> <img src="/icons/man.png" width="7.8%"/> <img src="/icons/head.png" width="7.8%"/> <img src="/icons/face.png" width="7.8%"/> <img src="/icons/hair.png" width="7.8%"/> <img src="/icons/beard.png" width="7.8%"/> <img src="/icons/forehead.png" width="7.8%"/> <img src="/icons/mouth.png" width="7.8%"/> <img src="/icons/nose.png" width="7.8%"/> <img src="/icons/eyes.png" width="7.8%"/> <img src="/icons/eyebrow.png" width="7.8%"/> <img src="/icons/ear.png" width="7.8%"/>
 
 ## Lastest Releases
 
