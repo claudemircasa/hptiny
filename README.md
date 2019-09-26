@@ -1,4 +1,4 @@
-# Detect human parts (PARTNet)
+# Detect and segment human body parts
 [![Generic badge](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)]()
 [![Status badge](https://img.shields.io/badge/status-in%20progress-green.svg)]()
 [![Type badge](https://img.shields.io/badge/type-compact-blueviolet.svg)]()
