@@ -57,7 +57,7 @@ class HPTiny:
 
         # save new model
         onnx.save(optimized_model, 'optimized_model.onnx')
-    
+
     def predict(self, frm):
         frame = frm.copy()
 
@@ -66,6 +66,10 @@ class HPTiny:
         
         blob = cv2.dnn.blobFromImage(resized, scalefactor=self.options.scale, size=(self.options.size, self.options.size), mean=(0,0,0), swapRB=True, crop=False)
         inferences = self.session.run(None, {self.inputs: blob.astype(np.float32)})
+
+        self.boxes = []
+        self.confidences = []
+        self.classes = []
 
         # loop over each detection
         for scores, box in zip(inferences[0], inferences[1]):
@@ -158,8 +162,8 @@ class HPTiny:
                     # check if the video writer is None
                     if writer is None:
                         # initialize our video writer
-                        fourcc = cv2.VideoWriter_fourcc(*'MPEG')
-                    writer = cv2.VideoWriter('{}.avi'.format(self.options.output_name), fourcc, 24, (pimage.shape[1], pimage.shape[0]), True)
+                        fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+                        writer = cv2.VideoWriter('{}.avi'.format(self.options.output_name), fourcc, fps, (pimage.shape[1], pimage.shape[0]), True)
                     writer.write(pimage)
 
                 cv2.imshow('', pimage)
@@ -167,6 +171,8 @@ class HPTiny:
                     break
 
             # When everything done, release the capture
+            if (writer):
+                writer.release()
             stream.release()
             cv2.destroyAllWindows()
         elif (_type == 1):
