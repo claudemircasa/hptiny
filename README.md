@@ -12,14 +12,12 @@
 
 ## Lastest Releases
 
-[v1.3.0](https://github.com/claudemircasa/human_parts/releases/tag/v1.3.0)
-[v1.2.0](https://github.com/claudemircasa/human_parts/releases/tag/v1.2.0)
-[v1.1.0](https://github.com/claudemircasa/human_parts/releases/tag/v1.1.0)
-[v1.0.0](https://github.com/claudemircasa/human_parts/releases/tag/v1.0.0)
+[v1.4.3-alpha](https://github.com/claudemircasa/hptiny/releases/tag/v1.4.3-alpha)
+[v1.4.2-alpha](https://github.com/claudemircasa/hptiny/releases/tag/v1.4.2-alpha)
 
-## What is PARTNet
-PARTNet is a compact model trained to be faster and smaller.
-The initial idea of this project is train a model to detect human head parts and expand to the entire human body.
+## What is hptiny
+hptiny is a compact model trained to be faster and smaller.
+The initial idea of this project is train a model to detect human body visible parts and expand to specific regions.
 Our model is trained over [ONNX](http://onnx.ai), this allows the model to be executed in real time on mobile devices and embedded devices, it also allows the model to be converted to other neural network architectures.
 The model is not as accurate as a full model, but it's being constantly updated for best results.
 
@@ -30,56 +28,55 @@ The Open Neural Network eXchange ([ONNX](http://onnx.ai)) is an open format to r
 You can see visualizations of each model's network architecture by using [Netron](https://lutzroeder.github.io/Netron) or [VisualDL](http://visualdl.paddlepaddle.org/).
 
 ### Run samples
-We offer the model in 3 different formats: ONNX, CoreML and TensorFlow. Download according to the last registered timestamp, the format is: **dd_mm_yyyy__hh_mm_ss**. To execute them simply unzip the specific file and run the command:
+We provide compressed binary versions of the model. To execute them simply unzip the specific file and run the command to see a list of valid options:
 
 ```bash
-python python/onnxruntime_predict.py <image_file>
-```
-or
-
-```bash
-python python/predict.py <image_file>
+python hptiny.py
 ```
 
 [![Visualizer badge](https://img.shields.io/badge/visualizer-netron-blue.svg)](https://lutzroeder.github.io/Netron)
 [![Visualizer badge](https://img.shields.io/badge/visualizer-visualdl-blue.svg)](http://visualdl.paddlepaddle.org/)
 
 ## Statistics
-[![Legend badge](https://img.shields.io/badge/-precision-blue.svg)]()
-[![Legend badge](https://img.shields.io/badge/-recall-orange.svg)]()
-[![Legend badge](https://img.shields.io/badge/-mAP-green.svg)]()
 
-<p align="center">
-<img src="/statistics/precision.png" width="30%"/>
-<img src="/statistics/recall.png" width="30%"/>
-<img src="/statistics/mAP.png" width="30%"/>
-</p>
+These are the statistics of the last iteration performed. They are based on a subsample of the original image database that contains 127,000 images.
 
-These are the statistics of the last iteration performed. They are based on a subsample of the original image database that contains 60,000 images.
+### Performance Per Tag mAP@IoU=50
 
-### Performance Per Tag
+| images | detections count | unique truth count |
+| - | - |
+| 13032 | 555774 |54664 | 
 
-| Probability Threshold | Overlap Threshold |
-| --- | --------- |
-| 50% | 30% |
+| class id | name | ap | TP | FP |
+| - | - | - | - | - |
+| 0 | Person | 0.00% | 0 | 0 |
+| 1 | Man | 19.17% | 58 | 32 |
+| 2 | Woman | 22.49% | 64 | 32 |
+| 3 | Boy | 39.52% | 238 | 54 |
+| 4 | Girl | 24.19% | 90 | 46 |
+| 5 | Human head | 10.30% | 46 | 160 |
+| 6 | Human face | 14.89% | 60 | 148 |
+| 7 | Human eye | 15.49% | 18 | 28 |
+| 8 | Human eyebrow | 10.91% | 4 | 20 |
+| 9 | Human nose | 7.98% | 14 | 34 |
+| 10 | Human mouth | 12.60% | 24 | 30 |
+| 11 | Human ear | 16.51% | 136 | 182 |
+| 12 | Human hair | 9.17% | 40 | 170 |
+| 13 | Human beard | 46.13% | 460 | 236 |
+| 14 | Human leg | 19.81% | 114 | 56 |
+| 15 | Human arm | 10.99% | 32 | 16 |
+| 16 | Human foot | 30.47% | 60 | 0 |
+| 17 | Human hand | 11.30% | 64 | 30 |
 
-| Tag | Precision | Recall | A.P. | Image Count |
-| --- | --------- | ------ | ---- | ----------- |
-| Human beard |	78.9% |	13.0% |	36.4%	| 5058 |
-| Man	| 43.3%	| 1.2%	| 13.7%	| 5155 |
-| Woman	| 40.0%	| 0.6%	| 10.7%	| 5116 |
-| Human ear |	38.5% |	0.4%	| 5.2%	| 5138 |
-| Human eye |	28.6%	| 0.1%	| 4.7%	| 5202 |
-| Human face |	10.0%	| 0.0%	| 7.1%	| 5185 |
-| Human mouth |	0.0%	| 0.0%	| 2.9%	| 5207 |
-| Human forehead |	0.0% | 0.0%	| 4.8%	| 5103 |
-| Human hair |	0.0%	| 0.0%	| 5.5%	| 5187 |
-| Human nose |	0.0%	| 0.0%	| 2.3%	| 5211 |
-| Human eyebrow |	0.0%	| 0.0%	| 4.4%	| 5142 |
-| Human head | 0.0%	| 0.0%	| 6.1%	| 5220 |
+for conf_thresh = 0.25, precision = 0.54, recall = 0.03, F1-score = 0.05 
+for conf_thresh = 0.25, TP = 1522, FP = 1274, FN = 53142, average IoU = 40.30 %
+
+IoU threshold = 50 %, used Area-Under-Curve for each unique Recall 
+mean average precision (mAP@0.50) = 0.178847, or 17.88 % 
+Total Detection Time: 106.000000 Seconds
 
 ## Dataset
-We use a subset of images extracted from Google Open Images Dataset V5 ([OIDV5](https://storage.googleapis.com/openimages/web/factsfigures.html)) containing 60,000 images that were randomly extracted using the [OIDv4_ToolKit tool](https://github.com/EscVM/OIDv4_ToolKit). 
+We use a subset of images extracted from Google Open Images Dataset V5 ([OIDV5](https://storage.googleapis.com/openimages/web/factsfigures.html)) containing 127,000 images that were randomly extracted using the [OIDv4_ToolKit tool](https://github.com/EscVM/OIDv4_ToolKit). 
 The database is really great, if you have interest contact us by [email](mailto:claudemir.casa@ufpr.br).
 
 ## Contributions
