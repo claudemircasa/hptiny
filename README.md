@@ -44,7 +44,7 @@ These are the statistics of the last iteration performed. They are based on a su
 ### Performance Per Tag mAP@IoU=50
 
 | images | detections count | unique truth count |
-| - | - |
+| - | - | - |
 | 13032 | 555774 |54664 | 
 
 | class id | name | ap | TP | FP |
