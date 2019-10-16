@@ -1,0 +1,7 @@
+numpy
+argparse
+onnxruntime
+#onnxruntime-gpu
+Pillow
+onnx
+opencv-python
