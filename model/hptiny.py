@@ -41,12 +41,6 @@ class HPTiny:
         self.inputs = self.session.get_inputs()[0].name
         self.outputs = [o for o in self.session.get_outputs()]
 
-        # load icons
-        self.icons = [cv2.imread(file, -1) for file in glob.glob('icons/*.png')]
-        self.icons = [cv2.resize(icon, (32,32)) for icon in self.icons]
-
-        #cv2.imshow('icons', self.icons[0])
-
     def check(self):
         return onnx.checker.check_model(self.model)
     
