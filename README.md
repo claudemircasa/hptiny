@@ -12,8 +12,7 @@
 
 ## Lastest Releases
 
-[v1.4.3-alpha](https://github.com/claudemircasa/hptiny/releases/tag/v1.4.3-alpha)
-[v1.4.2-alpha](https://github.com/claudemircasa/hptiny/releases/tag/v1.4.2-alpha)
+[v2.0](https://github.com/claudemircasa/hptiny/releases/tag/v2.0)
 
 ## What is hptiny
 hptiny is a compact model trained to be faster and smaller.
