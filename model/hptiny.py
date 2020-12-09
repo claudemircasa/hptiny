@@ -1,20 +1,20 @@
 # hptiny prediction script
 #
 # Author: Claudemir Casa
-# Copyright: Copyright 2019. GIS Technologies
-# License: GIS
+# Copyright: C.CASA 2020. GIS Technologies
+# License: Default
 # Version: 1.0.4
-# Mmaintainer: claudemircasa
+# Maintainer: claudemircasa
 # Email: claudemir.casa@ufpr.br
 # Status: under development
 
-from threading import Thread
-from queue import Queue
+import shutil
+import random
 import argparse
 import numpy as np
 import onnxruntime as rt
 from PIL import Image, ImageDraw
-from os import path
+from os import path, listdir, mkdir
 import time
 import cv2
 from cv2 import dnn
@@ -22,12 +22,13 @@ import onnx
 from onnx import optimizer
 import uuid
 import glob
+from tqdm import tqdm
 
 class HPTiny:
     def __init__(self, options):
         self.options = options
-        self.image_ext = ['jpeg', 'jpg', 'jpe', 'jp2', 'png', 'bmp', 'dib', 'pbm', 'pgm', 'ppm', 'sr', 'ras', 'tiff', 'tif']
-        self.video_ext = ['mp4', 'avi', 'webm']
+        self.image_ext = ['jpg', 'png', 'bmp']
+        self.video_ext = ['mp4', 'avi']
         self.boxes = []
         self.confidences = []
         self.classes = []
@@ -75,12 +76,23 @@ class HPTiny:
         self.classes = []
 
         # loop over each detection
+        show_classes = self.options.show_classes.split()
+        if (len(show_classes) > 0):
+            show_classes = [int(i, base=16) for i in show_classes]
         for scores, box in zip(inferences[0], inferences[1]):
 
-            # extract class id and confidence
             class_id = np.argmax(scores)
-            confidence = scores[class_id]
+            confidence = 0
+            # extract class id and confidence
+            if (len(show_classes) == 0):
+                confidence = scores[class_id]
+            else:
+                if (class_id in show_classes):
+                    confidence = scores[class_id]
+                else:
+                    continue
             
+            confidence = (confidence * 100) / 1.0
             # filter out weak predictions by ensuring the detected
             # probability is greater than the minimum probability
             if confidence > self.options.confidence:
@@ -102,38 +114,149 @@ class HPTiny:
                 self.confidences.append(float(confidence))
                 self.classes.append(class_id)
         
+        # normalize outputs because net outputs in a tiny range
+        self.confidences = [ (c - min(self.confidences)) / (max(self.confidences) - min(self.confidences)) if (max(self.confidences) - min(self.confidences)) > 0.0 else 0.0 for c in self.confidences]
+        self.confidences = [ (c * 100) / 10 for c in self.confidences]
+        self.confidences = [ (1.0 if c > 1.0 else c) for c in self.confidences]
         idxs = dnn.NMSBoxes(self.boxes, self.confidences, self.options.confidence, self.options.threshold)
 
         # ensure at least one detection exists
+        predicted_boxes = {}
         if len(idxs) > 0:
             # loop over the indexes we are keeping
             for i in idxs.flatten():
+                if (predicted_boxes.get(self.classes[i]) is None):
+                    predicted_boxes.update({self.classes[i]: []})
+
                 # extract the bounding box coordinates
                 (x, y) = (self.boxes[i][0], self.boxes[i][1])
                 (w, h) = (self.boxes[i][2], self.boxes[i][3])
 
                 # get image part
                 roi = frm[y:y+h, x:x+w]
-                mask = np.zeros((roi.shape[:2][0], roi.shape[:2][1], 3), np.uint8)
 
                 # draw a bounding box rectangle and label on the image
                 color = [int(c) for c in self.colors[self.classes[i]]]
-
-                mask[:] = color
-                #mask[:, :, :3] = color
-                #mask[:, :, 3:] = 100
-
-                #frame[y:y+h, x:x+w] = mask
-
                 cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
-                if self.options.show_percentage > 0:
-                    text = "{}: {:.4f}".format(self.labels[self.classes[i]], self.confidences[i])
+                if self.options.show_confidence > 0:
+                    text = "{}: {:.2f}".format(self.labels[self.classes[i]], self.confidences[i])
                 else:
                     text = "{}".format(self.labels[self.classes[i]])
                 cv2.putText(frame, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,
                     0.5, color, 2)
 
-        return frame
+                # {class_name, confidence, left, top, right, bottom}
+                predicted_boxes[self.classes[i]].append([self.labels[self.classes[i]].replace(' ', '_'), self.confidences[i], x, y, x+w, y+h])
+
+        return (frame, predicted_boxes)
+
+    def create_detection_files(self):
+        class_names = self.labels
+        person, man, woman, boy, girl = (0, 1, 2, 3, 4)
+
+        for i, _cls in enumerate(class_names):
+            current_path = path.join('dataset', 'validation', _cls)
+
+            if (path.exists(current_path)):
+                files = []
+
+                if (not path.exists(path.join('dataset','predictions'))):
+                    mkdir(path.join('dataset','predictions'))
+
+                for f in listdir(current_path):
+                    if (path.isfile(path.join(current_path, f))):
+                        files.append(path.join(current_path, f))
+
+                imgs = tqdm(files)
+                imgs.set_description(_cls)
+                for img in imgs:
+                    self.options.quiet=1
+                    self.options.device=img
+
+                    result = self.run()
+                    if (result is None):
+                        continue
+
+                    image, predicted_boxes = result
+                    
+                    filename = path.splitext(path.basename(img))[0]
+                    extension = path.splitext(path.basename(img))[1]
+
+                    try:
+                        # continue to next loop on error
+                        with open('{}.txt'.format(path.join('dataset', 'predictions', filename)), 'w') as f:
+                            if (i == person):
+                                concat_array = []
+                                if (man in predicted_boxes):
+                                    for m in predicted_boxes[man]:
+                                        m[0] = 'Person'
+                                        concat_array.append(m)
+                                if (woman in predicted_boxes):
+                                    for w in predicted_boxes[woman]:
+                                        w[0] = 'Person'
+                                        concat_array.append(w)
+                                if (boy in predicted_boxes):
+                                    for b in predicted_boxes[boy]:
+                                        b[0] = 'Person'
+                                        concat_array.append(b)
+                                if (girl in predicted_boxes):
+                                    for g in predicted_boxes[girl]:
+                                        g[0] = 'Person'
+                                        concat_array.append(g)
+                                if (i in predicted_boxes):
+                                    for p in predicted_boxes[i]:
+                                        p[0] = 'Person'
+                                        concat_array.append(p)
+                                
+                                for l in concat_array:
+                                    for cord in l: f.write(str(cord) + ' ')
+                                    f.write('\n')
+                            elif (i in predicted_boxes):
+                                for l in predicted_boxes[i]:
+                                    for cord in l: f.write(str(cord) + ' ')
+                                    f.write('\n')
+                                
+                            f.close()
+                        cv2.imwrite('{}{}'.format(path.join('dataset', 'predictions', filename), extension), image)
+                    except:
+                        continue
+
+    def create_validation_dataset(self):
+        class_names = self.labels
+        for i, _cls in enumerate(class_names):
+            current_path = path.join('dataset', 'train', _cls)
+
+            if (path.exists(current_path)):
+                original_files = []
+                files = []
+
+                for f in listdir(current_path):
+                    if (path.isfile(path.join(current_path, f))):
+                        original_files.append(f)
+                
+                percentage = 10
+                total_validation_files = int((len(original_files) * percentage) / 100)
+
+                for j in tqdm(range(total_validation_files)):
+                    while True:
+                        rindex = random.randint(0, len(original_files)-1)
+                        if (not original_files[rindex] in files):
+                            files.append(original_files[rindex])
+
+                            # copy file to validation directory
+                            src = path.join(current_path, original_files[rindex])
+                            src_label = path.join(current_path, 'Label', path.splitext(path.basename(original_files[rindex]))[0] + '.txt')
+                            dst = path.join('dataset', 'validation', _cls)
+                            dst_label = path.join('dataset', 'validation', _cls, 'Label')
+                            if (not path.exists(dst)):
+                                makedirs(dst)
+                            if (not path.exists(dst_label)):
+                                makedirs(dst_label)
+                            shutil.copy(src, dst)
+                            shutil.copy(src_label, dst_label)
+                            break
+
+        return True
 
     def run(self):
         _type = 0
@@ -159,7 +282,7 @@ class HPTiny:
 
                 # Run detection
                 start = time.time()
-                pimage = self.predict(frame)
+                image, confidences = self.predict(frame)
                 end = time.time()
 
                 # some information on processing single frame
@@ -179,13 +302,14 @@ class HPTiny:
                     if writer is None:
                         # initialize our video writer
                         fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-                        writer = cv2.VideoWriter('{}.avi'.format(self.options.output_name), fourcc, 15, (pimage.shape[1], pimage.shape[0]), True)
-                    writer.write(pimage)
+                        writer = cv2.VideoWriter('{}.avi'.format(self.options.output_name), fourcc, stream.get(cv2.CAP_PROP_FPS), (image.shape[1], image.shape[0]), True)
+                    writer.write(image)
 
-                cv2.imshow('', pimage)
+                if (not self.options.quiet):
+                    cv2.imshow('', image)
+                    if cv2.waitKey(1) & 0xFF == ord('q'):
+                        break
                 total += 1
-                if cv2.waitKey(1) & 0xFF == ord('q'):
-                    break
 
             # When everything done, release the capture
             if (writer):
@@ -195,9 +319,12 @@ class HPTiny:
         elif (_type == 1):
             image = cv2.imread(self.options.device)
 
+            if (image is None):
+                return None
+
             # Run detection
             start = time.time()
-            image = self.predict(image)
+            image, predicted_boxes = self.predict(image)
             end = time.time()
 
             elapsed = (end - start)
@@ -206,23 +333,36 @@ class HPTiny:
             if self.options.save_output > 0:
                 cv2.imwrite('{}.jpg'.format(self.options.output_name), image)
 
-            cv2.imshow('', image)
-            while True:
-                if (cv2.waitKey(1) & 0xFF == ord('q')):
-                    break
+            if (not self.options.quiet):
+                cv2.imshow('', image)
+                while True:
+                    if (cv2.waitKey(1) & 0xFF == ord('q')):
+                        break
+            
+            if (self.options.create_detection_files):
+                return (image, predicted_boxes)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(prog='test.py')
+    parser = argparse.ArgumentParser(prog='hptiny.py')
     parser.add_argument('device', type=str, help='device, video or image file')
-    parser.add_argument('--show_percentage', type=int, default=1, help='show box prediction percentage')
+    parser.add_argument('--show_confidence', type=int, default=1, help='show box prediction confidence')
+    parser.add_argument('--show_classes', type=str, default='', help='list of interest classes to predict (string separated by spaces like \'0 1\')')
     parser.add_argument('--save_output', type=int, default=0, help='save the output')
     parser.add_argument('--size', type=int, default=608, help='size of net input')
     parser.add_argument('--scale', type=float, default=(1/255))
-    parser.add_argument('--confidence', type=float, default=0.01)
+    parser.add_argument('--confidence', type=float, default=0.3)
     parser.add_argument('--threshold', type=float, default=0.4)
     parser.add_argument('--model', type=str, default='model.onnx')
-    parser.add_argument('--output_name', type=str, default=str(uuid.uuid4()))
+    parser.add_argument('--output_name', type=str, default=str(uuid.uuid4()), help='name of prediction (output file)')
+    parser.add_argument('--quiet', type=int, default=0, help='enable quiet mode')
+    parser.add_argument('--create_validation_set', type=int, default=0, help='create validation dataset')
+    parser.add_argument('--create_detection_files', type=int, default=0, help='create detection files to mAP calc')
     options = parser.parse_args()
     
     m = HPTiny(options=options)
-    m.run()
+    if (options.create_validation_set):
+        m.create_validation_dataset()
+    elif (options.create_detection_files):
+        m.create_detection_files()
+    else:
+        m.run()

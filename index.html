@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <title>HPTiny Network</title>
+
+        <link rel="stylesheet" href="css/style.min.css">
+        <style type="text/css">:root{--itchio_ui_bg: #2e2c2d;--itchio_ui_bg_dark: #282527}.wrapper{--itchio_font_family: '04b_03';--itchio_bg_color: #1c1117;--itchio_bg2_color: rgba(28, 17, 23, 1);--itchio_bg2_sub: #33282e;--itchio_text_color: #eeeeee;--itchio_link_color: #cf6032;--itchio_border_color: #48303d;--itchio_button_color: #cf6032;--itchio_button_fg_color: white;--itchio_button_shadow_color: #e27345;background-color:#1c1117;/*! */  /* */}.inner_column{color:#eeeeee;font-family:'04b_03',Lato,LatoExtended,sans-serif;background-color:rgba(28, 17, 23, 1)}.inner_column ::selection{color:white;background:#cf6032}.inner_column ::-moz-selection{color:white;background:#cf6032}.inner_column h1,.inner_column h2,.inner_column h3,.inner_column h4,.inner_column h5,.inner_column h6{font-family:inherit;font-weight:bold;color:inherit}.inner_column a,.inner_column .footer a{color:#cf6032}.inner_column .button,.inner_column .button:hover,.inner_column .button:active{background-color:#cf6032;color:white;text-shadow:0 1px 0px #e27345}.inner_column hr{background-color:#48303d}.inner_column table{border-color:#48303d}.inner_column .redactor-box .redactor-toolbar li a{color:#cf6032}.inner_column .redactor-box .redactor-toolbar li a:hover,.inner_column .redactor-box .redactor-toolbar li a:active,.inner_column .redactor-box .redactor-toolbar li a.redactor-act{background-color:#cf6032 !important;color:white !important;text-shadow:0 1px 0px #e27345 !important}.inner_column .redactor-box .redactor-toolbar .re-button-tooltip{text-shadow:none}.game_frame{background:#33282e;/*! */  /* */}.game_frame .embed_info{background-color:rgba(28, 17, 23, 0.85)}.game_loading .loader_bar .loader_bar_slider{background-color:#cf6032}.view_game_page .reward_row,.view_game_page .bundle_row{border-color:#33282e !important}.view_game_page .game_info_panel_widget{background:rgba(51, 40, 46, 1)}.view_game_page .star_value .star_fill{color:#cf6032}.view_game_page .rewards .quantity_input{background:rgba(51, 40, 46, 1);border-color:rgba(238, 238, 238, 0.5);color:#eeeeee}.view_game_page .right_col{display:block}.game_devlog_page li .meta_row .post_likes{border-color:#33282e}.game_devlog_post_page .post_like_button{box-shadow:inset 0 0 0 1px #48303d}.game_comments_widget .community_post .post_footer a,.game_comments_widget .community_post .post_footer .vote_btn,.game_comments_widget .community_post .post_header .post_date a,.game_comments_widget .community_post .post_header .edit_message{color:rgba(238, 238, 238, 0.5)}.game_comments_widget .community_post .reveal_full_post_btn{background:linear-gradient(to bottom, transparent, #1c1117 50%, #1c1117);color:#cf6032}.game_comments_widget .community_post .post_votes{border-color:rgba(238, 238, 238, 0.2)}.game_comments_widget .community_post .post_votes .vote_btn:hover{background:rgba(238, 238, 238, 0.05)}.game_comments_widget .community_post .post_footer .vote_btn{border-color:rgba(238, 238, 238, 0.5)}.game_comments_widget .community_post .post_footer .vote_btn span{color:inherit}.game_comments_widget .community_post .post_footer .vote_btn:hover,.game_comments_widget .community_post .post_footer .vote_btn.voted{background-color:#cf6032;color:white;text-shadow:0 1px 0px #e27345;border-color:#cf6032}.game_comments_widget .form .redactor-box,.game_comments_widget .form .click_input,.game_comments_widget .form .forms_markdown_input_widget{border-color:rgba(238, 238, 238, 0.5);background:transparent}.game_comments_widget .form .redactor-layer,.game_comments_widget .form .redactor-toolbar,.game_comments_widget .form .click_input,.game_comments_widget .form .forms_markdown_input_widget{background:rgba(51, 40, 46, 1)}.game_comments_widget .form .forms_markdown_input_widget .markdown_toolbar button{color:inherit;opacity:0.6}.game_comments_widget .form .forms_markdown_input_widget .markdown_toolbar button:hover,.game_comments_widget .form .forms_markdown_input_widget .markdown_toolbar button:active{opacity:1;background-color:#cf6032 !important;color:white !important;text-shadow:0 1px 0px #e27345 !important}.game_comments_widget .form .forms_markdown_input_widget .markdown_toolbar,.game_comments_widget .form .forms_markdown_input_widget li{border-color:rgba(238, 238, 238, 0.5)}.game_comments_widget .form textarea{border-color:rgba(238, 238, 238, 0.5);background:rgba(51, 40, 46, 1);color:inherit}.game_comments_widget .form .redactor-toolbar{border-color:rgba(238, 238, 238, 0.5)}.game_comments_widget .hint{color:rgba(238, 238, 238, 0.5)}.game_community_preview_widget .community_topic_row .topic_tag{background-color:#33282e}.footer .svgicon,.view_game_page .more_information_toggle .svgicon{fill:#eeeeee !important}
+        </style>
+    </head>
+    <body class="game_layout responsive no_theme_toggle">
+        <ul id="user_tools" class="user_tools"><li><a class="follow_user_btn action_btn" href="https://www.linkedin.com/in/claudemircasa/"><svg stroke-linecap="round" stroke="currentColor" class="svgicon icon_user_plus on_follow" role="img" version="1.1" viewBox="0 0 24 24" stroke-width="2" height="18" stroke-linejoin="round" aria-hidden="" fill="none" width="18"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg><svg stroke-linecap="round" stroke="currentColor" class="svgicon icon_user_check on_unfollow" role="img" version="1.1" viewBox="0 0 24 24" stroke-width="2" height="18" stroke-linejoin="round" aria-hidden="" fill="none" width="18"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg><span class="on_follow"><span class="full_label">Follow me</span><span class="mobile_label">Follow</span></span></a></li></ul>
+        <div id="wrapper" class="main wrapper">
+            <div class="inner_column size_medium family_pixel" id="inner_column" style="min-height: 617px;">
+                <div class="header" id="header"><h1 itemprop="name" class="game_title">HPTiny Neural Network</h1></div>
+                <div class="view_game_page page_widget">
+                    <div class="columns">
+                        <div class="left_col column">
+                            <div class="formatted_description user_formatted">
+                                <hr>
+                                <div style="font-size: 2em">Download de latest release of <a href="https://github.com/claudemircasa/hptiny/releases/latest">HPTiny Network</a> and use with your project.</div>
+                                <hr>
+                                <p>Hi!</p>
+                                <p>My name is <a href="https://www.linkedin.com/in/claudemircasa/">Claudemir Casa</a> and i created HPTiny, but what is HPTiny?</p>
+                                <p>hptiny is a compact model trained to be faster and smaller. The initial idea of this project is train a model to detect human body visible parts and expand to specific regions. Our model is trained over <a href="http://onnx.ai/">ONNX</a>, this allows the model to be executed in real time on mobile devices and embedded devices, it also allows the model to be converted to other neural network architectures. The model is not as accurate as a full model, but it's being constantly updated for best results.</p>
+                                <p>- Claudemir C.</p>
+                                <p>I want to answer a few questions:</p>
+                                <ul>
+                                    <li>Yes, you can use the template for personal and commercial applications with reference to the original author, me :)</li>
+                                    <li>This is a compact model, with less precision.</li>
+                                    <li>To access the database you must contact me via email <a href="#">claudemir.casa@ufpr.br</a></li>
+                                </ul>
+                                
+                                <h4>What is ONNX?</h4>
+                                <p>The Open Neural Network eXchange (<a href="http://onnx.ai/">ONNX</a>) is an open format to represent deep learning models. With ONNX, developers can move models between state-of-the-art tools and choose the combination that is best for them. ONNX is developed and supported by a community of partners.</p>
+                                
+                                <h4>Model Visualization</h4>
+                                <p>You can see visualizations of each model's network architecture by using <a href="https://lutzroeder.github.io/Netron">Netron</a> or <a href="http://visualdl.paddlepaddle.org/">VisualDL</a>.</p>
+                                
+                                <h5>How to run the model</h5>
+                                <p>We provide compressed binary versions of the model <a href="https://github.com/claudemircasa/hptiny/releases/latest">here</a>. To execute them simply unzip the specific file and read instructions of <a href="#">readme.txt</a> file.</p>
+                            
+                                <h4>Dataset</h4>
+                                <p>We use a subset of images extracted from <a href="https://storage.googleapis.com/openimages/web/factsfigures.html">Google Open Images Dataset</a> containing 127,000 images that were randomly extracted using the <a href="https://github.com/EscVM/OIDv4_ToolKit">OIDv4_ToolKit tool</a>. The database is really great, if you have interest contact us by <a href="mailto:claudemir.casa@ufpr.br">email</a>.</p>
+
+                                <h4>Statistics</h4>
+                                <p>These are the statistics of the last iteration performed. They are based on a subsample of the original image database that contains 127,000 images.</p>
+                                <h5>Performance Per Tag mAP@IoU=50</h5>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td colspan="5">General mAP is 37%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Class ID</td>
+                                            <td>Name</td>
+                                            <td>AP</td>
+                                            <td>TP</td>
+                                            <td>FP</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>0</td>
+                                            <td>Person</td>
+                                            <td>0.24</td>
+                                            <td>1012</td>
+                                            <td>601</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Man</td>
+                                            <td>0.39</td>
+                                            <td>1226</td>
+                                            <td>831</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Woman</td>
+                                            <td>0.35</td>
+                                            <td>839</td>
+                                            <td>515</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <section class="game_devlog">
+                                    <h2>Development log</h2>
+                                    <ul>
+                                        <li>
+                                            <a href="https://github.com/claudemircasa/hptiny/releases/tag/v2.1">New version</a>
+                                            <div class="post_date"><abbr title="02 Dec 2020 @ 15:52"><span class="icon icon-stopwatch"></span> Dec 02, 2020</abbr></div>
+                                        </li>
+                                    </ul>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="right_col column">
+                            <div class="video_embed"></div>
+                            <h4>All badges here</h4>
+                            <div class="screenshot_list" style="margin:0.8em 20px;">
+                                <a href="https://github.com/claudemircasa/hptiny/releases/latest" style="text-decoration: none;">
+                                    <img src="https://img.shields.io/badge/version-v2.1-blue.svg" style="display: initial;">
+                                </a>
+                                <a href="#" style="text-decoration: none;">
+                                    <img src="https://img.shields.io/badge/type-compact-blueviolet.svg" style="display: initial;">
+                                </a>
+                                <a href="#" style="text-decoration: none;">
+                                    <img src="https://img.shields.io/badge/status-in%20progress-green.svg" style="display: initial;">
+                                </a>
+                                <a href="https://lutzroeder.github.io/Netron" style="text-decoration: none;">
+                                    <img src="https://img.shields.io/badge/visualizer-netron-blue.svg" style="display: initial;">
+                                </a>
+                                <a href="http://visualdl.paddlepaddle.org/" style="text-decoration: none;">
+                                    <img src="https://img.shields.io/badge/visualizer-visualdl-blue.svg" style="display: initial;">
+                                </a>
+                            </div>
+                            <h4>All tags</h4>
+                            <div class="screenshot_list" style="margin:0.8em 20px;">
+                                <a href="https://github.com/topics/object-detection" style="text-decoration: none;">
+                                    <img src="https://img.shields.io/badge/Object_Detection-lightgray.svg" style="display: initial;">
+                                </a>
+                                <a href="https://github.com/topics/model" style="text-decoration: none;">
+                                    <img src="https://img.shields.io/badge/Model-lightgray.svg" style="display: initial;">
+                                </a>
+                                <a href="https://github.com/topics/compact" style="text-decoration: none;">
+                                    <img src="https://img.shields.io/badge/Compact-lightgray.svg" style="display: initial;">
+                                </a>
+                                <a href="https://github.com/topics/human-parts" style="text-decoration: none;">
+                                    <img src="https://img.shields.io/badge/Human_Parts-lightgray.svg" style="display: initial;">
+                                </a>
+                                <a href="https://github.com/topics/head-parts" style="text-decoration: none;">
+                                    <img src="https://img.shields.io/badge/Head_Parts-lightgray.svg" style="display: initial;">
+                                </a>
+                            </div>
+                            <h4>Download</h4>
+                            <div class="button_message" style="margin: 0.8em 20px;">
+                                <a href="https://github.com/claudemircasa/hptiny/releases/latest" class="button buy_btn">Download Now</a>
+                                <span class="buy_message" style="color:rgba(256,256,256,.5)"><span class="sub">v2.1-latest</span></span>
+                            </div>
+                            <p style="margin: 0.8em 20px;">Click download now to get access to the following files:</p>
+                            <div class="upload_list_widget" style="margin: 0.8em 20px;">
+                                <div class="upload">
+                                    <div class="info_column">
+                                        <div class="upload_name">
+                                            <strong class="name">hptiny.py <span class="file_size">15,7 kb</span></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="upload">
+                                    <div class="info_column">
+                                        <div class="upload_name">
+                                            <strong class="name">model.onnx <span class="file_size">35 mb</span></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="upload">
+                                    <div class="info_column">
+                                        <div class="upload_name">
+                                            <strong class="name">classes <span class="file_size">169 b</span></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="upload">
+                                    <div class="info_column">
+                                        <div class="upload_name">
+                                            <strong class="name">readme.txt <span class="file_size">363 b</span></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="upload">
+                                    <div class="info_column">
+                                        <div class="upload_name">
+                                            <strong class="name">requirements.txt <span class="file_size">187 b</span></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
