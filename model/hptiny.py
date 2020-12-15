@@ -357,6 +357,9 @@ if __name__ == '__main__':
     parser.add_argument('--quiet', type=int, default=0, help='enable quiet mode')
     parser.add_argument('--create_validation_set', type=int, default=0, help='create validation dataset')
     parser.add_argument('--create_detection_files', type=int, default=0, help='create detection files to mAP calc')
+    parser.add_argument('--polish', type=int, default=0, help='polish model')
+    parser.add_argument('--optimize', type=int, default=0, help='optimize if possible')
+    parser.add_argument('--convert', type=int, default=0, help='version to convert model')
     options = parser.parse_args()
     
     m = HPTiny(options=options)
@@ -364,5 +367,29 @@ if __name__ == '__main__':
         m.create_validation_dataset()
     elif (options.create_detection_files):
         m.create_detection_files()
+    elif (options.polish):
+        model = onnx.load(options.model)
+        polished_model = onnx.utils.polish_model(model)
+        onnx.save(polished_model, 'polished_model.onnx')
+    elif (options.optimize):       
+        model = onnx.load(options.model)
+        optimized_model = onnx.optimizer.optimize(model, [
+            'eliminate_identity',
+            'eliminate_nop_transpose',
+            'eliminate_nop_pad',
+            'eliminate_unused_initializer',
+            'fuse_consecutive_squeezes',
+            'fuse_consecutive_transposes',
+            'fuse_add_bias_into_conv',
+            'fuse_transpose_into_gemm'
+        ])
+
+        onnx.save(optimized_model, 'optimized_model.onnx')
+    elif (options.convert > 0):
+        import onnx.onnx_cpp2py_export.version_converter as C
+        model = onnx.load(options.model)
+        model_str = model.SerializeToString()
+        converted_model_str = C.convert_version(model_str, options.convert)
+        onnx.save(onnx.load_from_string(converted_model_str), 'converted-v{}.onnx'.format(options.convert))
     else:
         m.run()

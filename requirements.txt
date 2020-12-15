@@ -1,7 +1,7 @@
 # user Python 3.7.0 for compatibility
 numpy==1.19.4
 argparse==1.4.0
-onnxruntime==1.6.0
+onnxruntime==1.5.2
 # exclusive for gpu 
 #onnxruntime-gpu
 Pillow==8.0.1
