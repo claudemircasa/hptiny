@@ -118,13 +118,50 @@ class HPTiny:
         self.confidences = [ (c - min(self.confidences)) / (max(self.confidences) - min(self.confidences)) if (max(self.confidences) - min(self.confidences)) > 0.0 else 0.0 for c in self.confidences]
         self.confidences = [ (c * 100) / 10 for c in self.confidences]
         self.confidences = [ (1.0 if c > 1.0 else c) for c in self.confidences]
+
+        # if human tracking is active, generate new boxes
+        if self.options.human_track:
+            labels = ['Man', 'Woman', 'Boy', 'Girl']
+            idxs = []
+            for i in range(0, len(labels)):
+                idxs.append([j for j in range(len(self.classes)) if self.classes[j] == self.labels.index(labels[i])])
+
+            # clone person from man, woman, boy and girl
+            for i in idxs:
+                for j in i:
+                    self.classes[j] = self.labels.index('Person')
+
+        if self.options.classes:
+            class_to_show = eval(self.options.classes)
+            indexes = []
+
+            b, o, c  = [[], [], []]
+
+            if (len(class_to_show) > 0):
+                for i in range(0, len(self.classes)):
+                    if (self.classes[i] in class_to_show):
+                        indexes.append(i)
+
+                for i in indexes:
+                    b.append(self.boxes[i])
+                    o.append(self.confidences[i])
+                    c.append(self.classes[i])
+                
+                self.classes = c
+                self.boxes = b
+                self.confidences = o
+
+        #self.options.threshold = 0.2
+        #self.options.confidence = 0.4
         idxs = dnn.NMSBoxes(self.boxes, self.confidences, self.options.confidence, self.options.threshold)
 
         # ensure at least one detection exists
         predicted_boxes = {}
+
         if len(idxs) > 0:
             # loop over the indexes we are keeping
             for i in idxs.flatten():
+
                 if (predicted_boxes.get(self.classes[i]) is None):
                     predicted_boxes.update({self.classes[i]: []})
 
@@ -360,6 +397,8 @@ if __name__ == '__main__':
     parser.add_argument('--polish', type=int, default=0, help='polish model')
     parser.add_argument('--optimize', type=int, default=0, help='optimize if possible')
     parser.add_argument('--convert', type=int, default=0, help='version to convert model')
+    parser.add_argument('--human_track', type=int, default=0, help='track humans only')
+    parser.add_argument('--classes', type=str, default='[]', help='classes to detect')
     options = parser.parse_args()
     
     m = HPTiny(options=options)
